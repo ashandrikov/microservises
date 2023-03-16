@@ -1,0 +1,11 @@
+Dont forger to start docker
+
+http://localhost:5050/ -> go to db (password: password)
+
+POST: localhost:8080/api/v1/customers
+{
+    "firstName": "testUser",
+    "lastName": "testSurname",
+    "email": "testEmail"
+}
+
