@@ -9,3 +9,6 @@ POST: localhost:8080/api/v1/customers
     "email": "testEmail"
 }
 
+banner-generator:
+https://springhow.com/spring-boot-banner-generator/
+
