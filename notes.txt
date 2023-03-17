@@ -1,3 +1,8 @@
+Eureka - manages addresses / requests
+Feign - keeps common models
+Sleuth (zipkin) - distributed tracing
+
+
 Dont forger to start docker
 
 http://localhost:5050/ -> go to db (password: password)
@@ -14,4 +19,7 @@ https://springhow.com/spring-boot-banner-generator/
 
 Eureka
 http://localhost:8761
+
+Zipkin
+http://127.0.0.1:9411
 
