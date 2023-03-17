@@ -2,11 +2,14 @@ package com.amigoscode.customer;
 
 import com.amigoscode.clients.fraud.FraudCheckResponse;
 import com.amigoscode.clients.fraud.FraudClient;
+import com.amigoscode.clients.notification.NotificationClient;
+import com.amigoscode.clients.notification.NotificationRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
-public record CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate, FraudClient fraudClient) {
+public record CustomerService(CustomerRepository customerRepository,
+                              NotificationClient notificationClient,
+                              FraudClient fraudClient) {
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
                 .firstName(request.firstName())
@@ -22,6 +25,17 @@ public record CustomerService(CustomerRepository customerRepository, RestTemplat
         if (fraudCheckResponse != null && fraudCheckResponse.isFraudster()) {
             throw new IllegalArgumentException("fraudster: " + customer.getId());
         }
-        // todo: send notification
+
+//        NotificationRequest notificationRequest = new NotificationRequest(customer.getId(), customer.getEmail(), "Welcome to amigoscode!");
+//        notificationClient.sendNotification(notificationRequest);
+
+        //todo: make it assync, i.e. add it to queue
+        notificationClient.sendNotification(
+                new NotificationRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hi, %s, Welcome to amigoscode!", customer.getFirstName())
+                )
+        );
     }
 }
