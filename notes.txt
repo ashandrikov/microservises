@@ -1,9 +1,11 @@
 Eureka - manages addresses / requests
 Feign - keeps common models
 Sleuth (zipkin) - distributed tracing
+RabbitMQ
 
 
 Dont forger to start docker
+docker compose up -d (for docker, from root folder)
 
 http://localhost:5050/ -> go to db (password: password)
 

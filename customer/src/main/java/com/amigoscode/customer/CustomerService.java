@@ -1,15 +1,15 @@
 package com.amigoscode.customer;
 
+import com.amigoscode.ampq.RabbitMQMessageProducer;
 import com.amigoscode.clients.fraud.FraudCheckResponse;
 import com.amigoscode.clients.fraud.FraudClient;
-import com.amigoscode.clients.notification.NotificationClient;
 import com.amigoscode.clients.notification.NotificationRequest;
 import org.springframework.stereotype.Service;
 
 @Service
 public record CustomerService(CustomerRepository customerRepository,
-                              NotificationClient notificationClient,
-                              FraudClient fraudClient) {
+                              FraudClient fraudClient,
+                              RabbitMQMessageProducer producer) {
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
                 .firstName(request.firstName())
@@ -26,16 +26,16 @@ public record CustomerService(CustomerRepository customerRepository,
             throw new IllegalArgumentException("fraudster: " + customer.getId());
         }
 
-//        NotificationRequest notificationRequest = new NotificationRequest(customer.getId(), customer.getEmail(), "Welcome to amigoscode!");
-//        notificationClient.sendNotification(notificationRequest);
 
-        //todo: make it assync, i.e. add it to queue
-        notificationClient.sendNotification(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getEmail(),
-                        String.format("Hi, %s, Welcome to amigoscode!", customer.getFirstName())
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi, %s, Welcome to amigoscode!", customer.getFirstName())
+        );
+        producer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key"
         );
     }
 }
