@@ -32,4 +32,7 @@ https://springhow.com/spring-boot-banner-generator/
 To start service from terminal:
 java -jar eureka-server/target/eureka-server-1.0-SNAPSHOT.jar
 
+From terminal (root folder) to push docker images here: https://hub.docker.com/u/ashandrikov
+mvn clean package -P build-docker-image
+
 
