@@ -42,9 +42,11 @@ mvn clean package -P build-docker-image
 docker compose up -d
 
 DOCKER commands:
-docker compose stop
-docker compose start
-docker compose pull
+docker compose
+                ps // to see all containers
+                stop
+                start
+                pull
 
 MINIKUBE commands:
 minikube
