@@ -29,15 +29,45 @@ ________________
 Banner-generator:
 https://springhow.com/spring-boot-banner-generator/
 
+RabbitMQ credentials:
+guest
+guest
+
 To start service from terminal:
 java -jar eureka-server/target/eureka-server-1.0-SNAPSHOT.jar
 
 From terminal (root folder) to push docker images here: https://hub.docker.com/u/ashandrikov
+
 mvn clean package -P build-docker-image
-docker compose pull
 docker compose up -d
 
+DOCKER commands:
 docker compose stop
 docker compose start
+docker compose pull
+
+MINIKUBE commands:
+minikube
+    version
+    start --memory=4g !!! // kubectl will not work without it
+    stop
+    status
+    ip - master node ip address
+    service --url {serviceName}
+    tunnel // to get access service on specified port (i.e. zipkin)
+
+KUBECTL commands:
+kubectl
+    get pods
+    get services
+    port-forward pod/hello-world 8080:80
+    delete pod {podName}
+    describe pod {podName}
+    logs {podName}
+    get all
+
+Shortcuts for TERMINAL:
+Ctrl+C - exit
+Ctrl+L - clear
 
 
