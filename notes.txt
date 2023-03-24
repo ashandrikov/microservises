@@ -56,7 +56,8 @@ minikube
     status
     ip - master node ip address
     service --url {serviceName}
-    tunnel // to get access service on specified port (i.e. zipkin)
+    tunnel // to get access LoadBalancer service on specified port (i.e. zipkin, customer)
+           // and then I can send request: http://localhost/api/v1/customers
 
 KUBECTL commands:
 kubectl
@@ -67,6 +68,9 @@ kubectl
     describe pod {podName}
     logs {podName}
     get all
+    apply -f minikube/services/customer // apply configs (deployment.yml)
+    scale --replicas=0 deployment customer
+    exec -it postgres-0 -- psql -U amigoscode // to get into database // Ctrl + D to exit db
 
 Shortcuts for TERMINAL:
 Ctrl+C - exit
